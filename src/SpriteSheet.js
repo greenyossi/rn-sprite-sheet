@@ -69,6 +69,11 @@ export default class SpriteSheet extends React.PureComponent {
       frameWidth
     });
 
+    console.log(imageHeight);
+    console.log(imageWidth);
+    console.log(frameHeight);
+    console.log(frameWidth);
+
     this.generateInterpolationRanges();
   }
 
@@ -175,12 +180,14 @@ export default class SpriteSheet extends React.PureComponent {
 
   getFrameCoords = i => {
     let { rows, columns } = this.props;
-    let { frameHeight, frameWidth } = this.state;
+    let { frameHeight, frameWidth, imageWidth } = this.state;
 
     let successionWidth = i * frameWidth;
 
+    const x = successionWidth % (columns * frameWidth);
+
     return {
-      x: -successionWidth % (columns * frameWidth),
+      x: x > Math.floor(imageWidth) ? -0 : -x,
       y: -Math.floor(successionWidth / (columns * frameWidth)) * frameHeight
     };
   };
